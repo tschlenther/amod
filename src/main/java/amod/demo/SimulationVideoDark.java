@@ -123,8 +123,8 @@ public enum SimulationVideoDark {
         amodeusComponent.setSize(resolution);
         AmodeusComponentUtil.adjustMapZoom(amodeusComponent, network, scenarioOptions);
         amodeusComponent.zoomIn();
-//        amodeusComponent.zoomIn();
-        // amodeusComponent.zoomIn();
+        amodeusComponent.zoomIn();
+         amodeusComponent.zoomIn();
         amodeusComponent.moveMap(-50, 100);
 
         StorageUtils storageUtils = new StorageUtils(outputSubDirectory);
@@ -142,7 +142,7 @@ public enum SimulationVideoDark {
             int intervalEstimate = storageSupplier.getIntervalEstimate(); // 10
             int hrs = 60 * 60 / intervalEstimate;
             final int end = Math.min((int) (9.2 * hrs), storageSupplier.size());
-            for (int index = 5 * hrs; index < 17*hrs; index += 1) {
+            for (int index = 16 * hrs; index < 19*hrs; index += 1) {
                 SimulationObject simulationObject = storageSupplier.getSimulationObject(index);
                 simulationObjectsVideo.append(simulationObject);
 

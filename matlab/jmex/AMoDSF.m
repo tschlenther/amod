@@ -31,6 +31,7 @@ end
 
 % Getting geographical position of all nodes
 Location = RoadNetwork.Location;
+Road.Loc = Location;
 
 % Creating speed matrix between all nodes
 Speed = sparse(n,n);
@@ -103,7 +104,7 @@ for i=1:n
         A(i,node) = 1;
     end
 end
-
+Road.A = A;
 NOut = A*ones(n,1);
 NIn = ones(1,n)*A;
 N     = NIn*ones(n,1);
@@ -126,18 +127,21 @@ cR = C(:)*2;
 cR = cR(AT(:) > 0);
 assert(length(cR) == N,...
     'The road capacity matrix does not coincide with the adjacency matrix')
+Road.C = C;
 
 Time = TravelTimes';
 t = Time(:);
 dt = t(t > 0);
 assert(length(dt) == N,...
     'The time matrix does not coincide with the adjacency matrix')
+Road.T = Time;
 
 Dist = LinkLength';
 ds = Dist(:);
 ds = ds(t > 0);
 assert(length(ds) == N,...
     'The distance matrix does not coincide with the adjacency matrix')
+Road.D = Dist;
 
 % Get congestion time
 dtauCR = dt./(cR);
@@ -148,6 +152,7 @@ eR = EnergyR(:);
 eR = eR(eR > 0);
 assert(length(eR) == N,...
     'The road energy matrix does not coincide with the adjacency matrix')
+Road.E = EnergyR;
 
 % Get in and out nodes in vector
 iNodeIn = cell(n,1);
@@ -252,8 +257,8 @@ for i = 1:numberClusters
 end
 
 
-oR = Sources;
-dR = Sinks;
+oR = Sources+1;
+dR = Sinks+1;
 aR = FlowsIn;
 
 dBundle = unique(dR);
@@ -280,9 +285,11 @@ end
 %     % Get sink flow with location corresponding to the m-th request
 %     aOut(dR(m)+1,m)   = aR(m);
 % end
+Road.aR = aR;
+Road.oR = oR;
+Road.dR = dR;
+
 disp('Request prepared');
-
-
 
 %% Costs
 % Tank-to-miles efficiency

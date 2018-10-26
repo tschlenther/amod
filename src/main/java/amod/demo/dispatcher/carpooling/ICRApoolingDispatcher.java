@@ -84,6 +84,7 @@ public class ICRApoolingDispatcher extends SharedPartitionedDispatcher {
 	private final boolean predictedDemand;
 	private final boolean allowAssistance;
 	private final boolean poolingFlag;
+	private final double minNumberCarsAssistance;
 	private List<Link> linkList;
 	static private final Logger logger = Logger.getLogger(ICRApoolingDispatcher.class);
 
@@ -112,16 +113,17 @@ public class ICRApoolingDispatcher extends SharedPartitionedDispatcher {
 		System.out.println("Using DistanceHeuristics: " + distanceHeuristics.name());
 		this.distanceFunction = distanceHeuristics.getDistanceFunction(network);
 		this.config = config;
-		this.timeStep = 10;
+		this.timeStep = 15;
 		// dispatchPeriod = safeConfig.getInteger("dispatchPeriod", timeStep *
 		// 60);
 		dispatchPeriod = timeStep * 60;
-		this.planningHorizon = 10;
+		this.planningHorizon = 5;
 		this.fixedCarCapacity = 2;
 		this.router = router;
 		this.predictedDemand = false;
-		this.allowAssistance = false;
+		this.allowAssistance = true;
 		this.poolingFlag = true;
+		this.minNumberCarsAssistance = 500;
 		this.linkList = ICRApoolingDispatcherUtils.getLinkforStation(network, config, virtualNetwork);
 
 	}
@@ -632,7 +634,7 @@ public class ICRApoolingDispatcher extends SharedPartitionedDispatcher {
 
 		// Assign unassigned requests
 		if ((round_now % 10 == 0 && round_now > dispatchPeriod && round_now >= dispatchTime
-				&& round_now < (dispatchTime + timeStep * 60) && getRoboTaxisFree().size() > 100
+				&& round_now < (dispatchTime + timeStep * 60) && getRoboTaxisFree().size() > minNumberCarsAssistance
 				&& allowAssistance == true)
 				|| (round_now > dispatchPeriod && round_now == (dispatchTime - 1 + timeStep * 60)
 						&& getRoboTaxisFree().size() > 100 && allowAssistance == true)) {
@@ -751,10 +753,10 @@ public class ICRApoolingDispatcher extends SharedPartitionedDispatcher {
 					if (Arrays.stream(xdoQueue).sum() != 0) {
 						List<RoboTaxi> freecar = getVirtualNodeSORoboTaxi().get(fromNode).stream()
 								.filter(car -> (car.getMenu().getStarterCourse().getMealType() == SharedMealType.DROPOFF
-										&& toNode.getLinks().contains(car.getCurrentDriveDestination())
+										&& toNode.getLinks().contains(car.getCurrentDriveDestination()))
 										|| (car.getMenu().getStarterCourse().getMealType() == SharedMealType.REDIRECT
 												&& toNode.getLinks()
-														.contains(car.getMenu().getCourses().get(1).getLink()))))
+														.contains(car.getMenu().getCourses().get(1).getLink())))
 								.collect(Collectors.toList());
 						GlobalAssert.that(freecar.isEmpty());
 					}

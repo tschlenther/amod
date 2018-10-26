@@ -37,7 +37,7 @@ for i = 1:1:numberNodes
     travelTimes(i,:) = inputCarpooling.(InputNames{i+numberNodes})';
 end
 
-Delta_Threshold = 0;
+Delta_Threshold = 1000;
 
 RoadNetwork.RoadGraph = RoadGraph;
 RoadNetwork.TravelTimes = travelTimes;
@@ -69,7 +69,7 @@ end
 Passengers.FlowsOut = FlowsOut;
 
 use_outpax = 1;
-Flags.milpflag = 1;
+Flags.milpflag = 0;
 Flags.ignorerealpax = 1 - use_outpax;
 Flags.pooling_flag = 1;
 

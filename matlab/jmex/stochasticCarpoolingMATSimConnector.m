@@ -13,7 +13,7 @@ while 1
 container = socket.pollContainer();
 [inputCarpooling] = jmexStruct(container);
 
-reactiveFlag = 0;
+reactiveFlag = 1;
 
 % get number of nodes
 numberNodes = length(inputCarpooling.roadGraph0);
