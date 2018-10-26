@@ -121,7 +121,7 @@ public class ICRApoolingDispatcher extends SharedPartitionedDispatcher {
 		this.fixedCarCapacity = 2;
 		this.router = router;
 		this.predictedDemand = false;
-		this.allowAssistance = true;
+		this.allowAssistance = false;
 		this.poolingFlag = true;
 		this.minNumberCarsAssistance = 500;
 		this.linkList = ICRApoolingDispatcherUtils.getLinkforStation(network, config, virtualNetwork);
