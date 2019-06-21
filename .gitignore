@@ -10,7 +10,7 @@ buildNumber.properties
 .mvn/timing.properties
 
 #output
-scenarios/SanFrancisco/output
+scenarios/SanFrancisco/
 
 
 # eclipse
