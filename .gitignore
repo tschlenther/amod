@@ -9,6 +9,10 @@ dependency-reduced-pom.xml
 buildNumber.properties
 .mvn/timing.properties
 
+#output
+scenarios/SanFrancisco/output
+
+
 # eclipse
 .settings/
 .project
