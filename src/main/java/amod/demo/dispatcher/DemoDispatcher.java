@@ -50,6 +50,8 @@ public class DemoDispatcher extends RebalancingDispatcher {
     @Override
     public void redispatch(double now) {
 
+        System.out.println("" + this.getClass().getSimpleName() + " is redispatching at time=" + now);
+
         /** stop all vehicles which are driving by an open request */
         // TODO CR check again
         Map<RoboTaxi, AVRequest> stopDrivingBy = DrivebyRequestStopper //

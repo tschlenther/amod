@@ -5,6 +5,7 @@ import java.io.File;
 import java.net.MalformedURLException;
 import java.util.Objects;
 
+import amod.demo.dispatcher.CustomRandomDispatcher;
 import org.matsim.api.core.v01.Scenario;
 import org.matsim.api.core.v01.network.Network;
 import org.matsim.api.core.v01.population.Population;
@@ -21,7 +22,6 @@ import com.google.inject.Key;
 import com.google.inject.name.Names;
 
 import amod.demo.analysis.CustomAnalysis;
-import amod.demo.dispatcher.DemoDispatcher;
 import amod.demo.ext.Static;
 import amod.demo.generator.DemoGenerator;
 import ch.ethz.idsc.amodeus.analysis.Analysis;
@@ -142,7 +142,7 @@ public enum ScenarioServer {
             @Override
             public void install() {
                 AVUtils.registerDispatcherFactory(binder(), //
-                        DemoDispatcher.class.getSimpleName(), DemoDispatcher.Factory.class);
+                        CustomRandomDispatcher.class.getSimpleName(), CustomRandomDispatcher.Factory.class);
             }
         });
 
