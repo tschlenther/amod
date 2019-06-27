@@ -32,8 +32,18 @@ public enum ScenarioPreparer {
     ;
 
     public static void main(String[] args) throws MalformedURLException, Exception {
-        File workingDirectory = MultiFileTools.getDefaultWorkingDirectory();
-        run(workingDirectory);
+        File file;
+        if(args.length > 0){
+            file = new File(args[0]);
+        } else{
+            file = MultiFileTools.getDefaultWorkingDirectory();
+        }
+        System.out.println(file.getCanonicalPath());
+        System.out.println(file.getAbsolutePath());
+        System.out.println(file.getParentFile().getAbsolutePath());
+
+
+        run(file);
     }
 
     /** loads scenario preparer in the {@link File} workingDirectory @param workingDirectory

@@ -55,8 +55,14 @@ public enum ScenarioServer {
     ;
 
     public static void main(String[] args) throws MalformedURLException, Exception {
-        simulate(MultiFileTools.getDefaultWorkingDirectory());
+        File file;
+        if(args.length > 0){
+            file = new File(args[0]);
+        } else{
+            file = MultiFileTools.getDefaultWorkingDirectory();
+        }
     }
+
 
     /** runs a simulation run using input data from Amodeus.properties, av.xml and MATSim config.xml
      * 
